@@ -4,11 +4,11 @@ export default {
   async mostrar(req, res) {
     try {
       const data = await models.Evento.findAll({
-        // include : {
-        //   model : models.Expositor
-        // }
+        include : {
+          model : models.Institucion
+        }
       });
-      res.status(200).json({ mensaje: "Todo Okey", body: data });
+      res.status(200).json({ data });
     } catch (error) {
       console.log(error);
       res.status(500).json({ mensaje: "Error al listar" });

@@ -35,7 +35,7 @@ export default {
       time: new Date(),
     };
     const token = jwt.sign(payload, "MI_CODIGO_SECRETO", {
-      expiresIn: 20,
+      expiresIn: 3600,
     });
 
     return res.status(200).json({
@@ -85,5 +85,8 @@ export default {
     return res.status(200).json({ mensaje : "Ok", user : req.nom_usuario});
     
   },
-  async logout(req, res) {},
+  async logout(req, res) {
+
+    
+  },
 };
