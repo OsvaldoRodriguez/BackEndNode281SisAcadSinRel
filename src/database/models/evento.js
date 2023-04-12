@@ -12,6 +12,37 @@ module.exports = (sequelize, DataTypes) => {
       models.Evento.belongsTo(models.Institucion, {
         foreignKey: "InstitucionId",
       });
+
+      models.Evento.hasMany(models.Objetivo, {
+        foreignKey : 'EventoId'
+      })
+
+      models.Evento.hasMany(models.Certificado, {
+        foreignKey : 'EventoId'
+      })
+
+      models.Evento.hasMany(models.Actividad_Evento, {
+        foreignKey : 'EventoId'
+      })
+
+      
+      models.Evento.belongsToMany(models.Usuario, {
+        through : models.Usuario_Se_Inscribe_Evento, foreignKey : 'EventoId'
+      })
+
+      models.Evento.belongsToMany(models.Usuario, {
+        through : models.Usuario_Califica_Evento, foreignKey : 'EventoId'
+      })
+
+      models.Evento.belongsToMany(models.Usuario, {
+        through : models.Usuario_Reserva_Participacion_Evento, foreignKey : 'EventoId'
+      })
+
+      
+      models.Evento.belongsToMany(models.Usuario, {
+        through : models.Usuario_Comenta_Evento, foreignKey : 'EventoId'
+      })
+
     }
   }
   Evento.init(
@@ -21,6 +52,7 @@ module.exports = (sequelize, DataTypes) => {
       fecha_fin: DataTypes.DATE,
       logo: DataTypes.STRING,
       InstitucionId: DataTypes.INTEGER,
+      descripcion : DataTypes.STRING
     },
     {
       sequelize,

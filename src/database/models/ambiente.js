@@ -11,6 +11,22 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
+
+      models.Ambiente.belongsTo(models.Institucion, {
+        foreignKey : 'InstitucionId'
+      })
+
+      models.Ambiente.hasMany(models.Recurso, {
+        foreignKey : 'AmbienteId'
+      })
+
+      models.Ambiente.hasMany(models.Foto, {
+        foreignKey : 'AmbienteId'
+      })
+
+      models.Ambiente.belongsToMany(models.Actividad_Evento, {
+        through : models.Actividad_Evento_Solicita_Ambiente, foreignKey : 'AmbienteId'
+      }) 
     }
   }
   Ambiente.init({

@@ -11,6 +11,9 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
+      models.Material_De_Actividad.belongsTo(models.Expositor, {
+        foreignKey: 'ExpositorId'
+      })
     }
   }
   Material_De_Actividad.init({

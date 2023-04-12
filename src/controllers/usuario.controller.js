@@ -4,11 +4,14 @@ export default {
   async mostrar(req, res) {
     try {
       const data = await models.Usuario.findAll({
-        // include : {
-        //   model : models.Expositor
-        // }
+        include : {
+          model : models.Rol,
+          where : {
+          }
+        }, 
+        
       });
-      res.status(200).json({ data });
+      res.status(200).json(data);
     } catch (error) {
       console.log(error);
       res.status(500).json({ mensaje: "Error al listar" });

@@ -4,14 +4,9 @@ export default {
     // console.log(models.Usuario.rawAttributes);
     try {
       const data = await models.Persona.findAll({
-        // include: {
-        //   model: models.Usuario, 
-        //   include : {
-        //     model : models.Expositor,            
-        //   }
-        //   // required: true
-        // }
-        // primaryKey: 'idPersona'
+        include : {
+          model : models.Usuario
+        }
       });
       res.status(200).json({ mensaje: "Todo Okey", body: data });
     } catch (error) {

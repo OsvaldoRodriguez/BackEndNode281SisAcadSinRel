@@ -91,10 +91,10 @@ Route.put('/objetivo/:id', objetivoController.actualizar);
 Route.delete('/objetivo/:id', objetivoController.eliminar);
 
 Route.get('/evento', eventoController.mostrar);
-Route.post('/evento', eventoController.guardar);
-Route.get('/evento/:id', eventoController.mostrarId);
-Route.put('/evento/:id', eventoController.actualizar);
-Route.delete('/evento/:id', eventoController.eliminar);
+Route.post('/evento', authMiddleware.auth, eventoController.guardar);
+Route.get('/evento/:id', authMiddleware.auth, eventoController.mostrarId);
+Route.put('/evento/:id', authMiddleware.auth, eventoController.actualizar);
+Route.delete('/evento/:id', authMiddleware.auth, eventoController.eliminar);
 
 Route.get('/recurso', recursoController.mostrar);
 Route.post('/recurso', recursoController.guardar);

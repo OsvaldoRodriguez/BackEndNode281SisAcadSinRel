@@ -24,6 +24,9 @@ module.exports = {
       InstitucionId: {
         type: Sequelize.INTEGER
       },
+      descripcion: {
+        type: Sequelize.STRING
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE

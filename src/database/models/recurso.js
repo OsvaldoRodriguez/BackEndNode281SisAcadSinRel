@@ -11,6 +11,10 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
+
+      models.Recurso.belongsTo(models.Ambiente, {
+        foreignKey : 'AmbienteId'
+      })
     }
   }
   Recurso.init({
