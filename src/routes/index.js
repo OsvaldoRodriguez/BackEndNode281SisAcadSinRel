@@ -32,63 +32,68 @@ export const Route = Router();
 // hay que proteger el pefil, logout
 Route.post('/auth/login', authController.login)
 Route.post('/auth/register', authController.register)
+Route.post('/auth/register_user', authController.register_user)
+Route.put('/auth/actualizar/:id', authMiddleware.auth, authController.actualizar)
 Route.get('/auth/perfil', authMiddleware.auth, authController.perfil)
 Route.post('/auth/logout', authMiddleware.auth, authController.logout)
 
 
+
+
 // creando los endpoints (rutas)
-Route.get('/persona', personaController.mostrar);
-Route.post('/persona', personaController.guardar);
-Route.get('/persona/:id', personaController.mostrarId);
-Route.put('/persona/:id', personaController.actualizar);
-Route.delete('/persona/:id', personaController.eliminar);
+Route.get('/persona', authMiddleware.auth, personaController.mostrar);
+Route.post('/persona', authMiddleware.auth, personaController.guardar);
+Route.get('/persona/:id', authMiddleware.auth, personaController.mostrarId);
+Route.put('/persona/:id', authMiddleware.auth, personaController.actualizar);
+Route.delete('/persona/:id', authMiddleware.auth, personaController.eliminar);
+
 
 // para usuario
-Route.get('/usuario', usuarioController.mostrar);
-Route.post('/usuario', usuarioController.guardar);
-Route.get('/usuario/:id', usuarioController.mostrarId);
-Route.put('/usuario/:id', usuarioController.actualizar);
-Route.delete('/usuario/:id', usuarioController.eliminar);
+Route.get('/usuario', authMiddleware.auth, usuarioController.mostrar);
+Route.post('/usuario', authMiddleware.auth, usuarioController.guardar);
+Route.get('/usuario/:id',  usuarioController.mostrarId);
+Route.put('/usuario/:id', authMiddleware.auth, usuarioController.actualizar);
+Route.delete('/usuario/:id', authMiddleware.auth, usuarioController.eliminar);
 
 //Rol
-Route.get('/rol', rolController.mostrar);
-Route.post('/rol', rolController.guardar);
-Route.get('/rol/:id', rolController.mostrarId);
-Route.put('/rol/:id', rolController.actualizar);
-Route.delete('/rol/:id', rolController.eliminar);
+Route.get('/rol', authMiddleware.auth, rolController.mostrar);
+Route.post('/rol', authMiddleware.auth, rolController.guardar);
+Route.get('/rol/:id',  rolController.mostrarId);
+Route.put('/rol/:id', authMiddleware.auth, rolController.actualizar);
+Route.delete('/rol/:id', authMiddleware.auth, rolController.eliminar);
 
 //Usuario_Tiene_Rol
-Route.get('/usuario_tiene_rol', usuario_tiene_rolController.mostrar);
-Route.post('/usuario_tiene_rol', usuario_tiene_rolController.guardar);
-Route.get('/usuario_tiene_rol/:id', usuario_tiene_rolController.mostrarId);
-Route.put('/usuario_tiene_rol/:id', usuario_tiene_rolController.actualizar);
-Route.delete('/usuario_tiene_rol/:id', usuario_tiene_rolController.eliminar);
+Route.get('/usuario_tiene_rol', authMiddleware.auth, usuario_tiene_rolController.mostrar);
+Route.post('/usuario_tiene_rol', authMiddleware.auth, usuario_tiene_rolController.guardar);
+Route.get('/usuario_tiene_rol/:id', authMiddleware.auth, usuario_tiene_rolController.mostrarId);
+Route.put('/usuario_tiene_rol/:id', authMiddleware.auth, usuario_tiene_rolController.actualizar);
+Route.delete('/usuario_tiene_rol/:id', authMiddleware.auth, usuario_tiene_rolController.eliminar);
 
 
 // Expositor
-Route.get('/expositor', expositorController.mostrar);
-Route.post('/expositor', expositorController.guardar);
-Route.get('/expositor/:id', expositorController.mostrarId);
-Route.put('/expositor/:id', expositorController.actualizar);
-Route.delete('/expositor/:id', expositorController.eliminar);
+Route.get('/expositor', authMiddleware.auth, expositorController.mostrar);
+Route.post('/expositor', authMiddleware.auth, expositorController.guardar);
+Route.get('/expositor/:id', authMiddleware.auth, expositorController.mostrarId);
+Route.put('/expositor/:id', authMiddleware.auth, expositorController.actualizar);
+Route.delete('/expositor/:id', authMiddleware.auth, expositorController.eliminar);
 
-Route.get('/material_de_actividad', material_de_actividadController.mostrar);
-Route.post('/material_de_actividad', material_de_actividadController.guardar);
-Route.get('/material_de_actividad/:id', material_de_actividadController.mostrarId);
-Route.put('/material_de_actividad/:id', material_de_actividadController.actualizar);
-Route.delete('/material_de_actividad/:id', material_de_actividadController.eliminar);
+Route.get('/material_de_actividad', authMiddleware.auth, material_de_actividadController.mostrar);
+Route.post('/material_de_actividad', authMiddleware.auth, material_de_actividadController.guardar);
+Route.get('/material_de_actividad/:id', authMiddleware.auth, material_de_actividadController.mostrarId);
+Route.put('/material_de_actividad/:id', authMiddleware.auth, material_de_actividadController.actualizar);
+Route.delete('/material_de_actividad/:id', authMiddleware.auth, material_de_actividadController.eliminar);
 
-Route.get('/institucion', institucionController.mostrar);
-Route.post('/institucion', institucionController.guardar);
-Route.get('/institucion/:id', institucionController.mostrarId);
-Route.put('/institucion/:id', institucionController.actualizar);
-Route.delete('/institucion/:id', institucionController.eliminar);
+Route.get('/institucion', authMiddleware.auth, institucionController.mostrar);
+Route.post('/institucion', authMiddleware.auth, institucionController.guardar);
+Route.get('/institucion/:id', authMiddleware.auth, institucionController.mostrarId);
+Route.put('/institucion/:id', authMiddleware.auth, institucionController.actualizar);
+Route.delete('/institucion/:id', authMiddleware.auth, institucionController.eliminar);
 
-Route.get('/objetivo', objetivoController.mostrar);
-Route.post('/objetivo', objetivoController.guardar);
-Route.get('/objetivo/:id', objetivoController.mostrarId);
-Route.put('/objetivo/:id', objetivoController.actualizar);
-Route.delete('/objetivo/:id', objetivoController.eliminar);
+Route.get('/objetivo', authMiddleware.auth, objetivoController.mostrar);
+Route.post('/objetivo', authMiddleware.auth, objetivoController.guardar);
+Route.get('/objetivo/:id', authMiddleware.auth, objetivoController.mostrarId);
+Route.put('/objetivo/:id', authMiddleware.auth, objetivoController.actualizar);
+Route.delete('/objetivo/:id', authMiddleware.auth, objetivoController.eliminar);
 
 Route.get('/evento', eventoController.mostrar);
 Route.post('/evento', authMiddleware.auth, eventoController.guardar);
@@ -96,86 +101,86 @@ Route.get('/evento/:id', authMiddleware.auth, eventoController.mostrarId);
 Route.put('/evento/:id', authMiddleware.auth, eventoController.actualizar);
 Route.delete('/evento/:id', authMiddleware.auth, eventoController.eliminar);
 
-Route.get('/recurso', recursoController.mostrar);
-Route.post('/recurso', recursoController.guardar);
-Route.get('/recurso/:id', recursoController.mostrarId);
-Route.put('/recurso/:id', recursoController.actualizar);
-Route.delete('/recurso/:id', recursoController.eliminar);
+Route.get('/recurso', authMiddleware.auth, recursoController.mostrar);
+Route.post('/recurso', authMiddleware.auth, recursoController.guardar);
+Route.get('/recurso/:id', authMiddleware.auth, recursoController.mostrarId);
+Route.put('/recurso/:id', authMiddleware.auth, recursoController.actualizar);
+Route.delete('/recurso/:id', authMiddleware.auth, recursoController.eliminar);
 
-Route.get('/ambiente', ambienteController.mostrar);
-Route.post('/ambiente', ambienteController.guardar);
-Route.get('/ambiente/:id', ambienteController.mostrarId);
-Route.put('/ambiente/:id', ambienteController.actualizar);
-Route.delete('/ambiente/:id', ambienteController.eliminar);
+Route.get('/ambiente', authMiddleware.auth, ambienteController.mostrar);
+Route.post('/ambiente', authMiddleware.auth, ambienteController.guardar);
+Route.get('/ambiente/:id', authMiddleware.auth, ambienteController.mostrarId);
+Route.put('/ambiente/:id', authMiddleware.auth, ambienteController.actualizar);
+Route.delete('/ambiente/:id', authMiddleware.auth, ambienteController.eliminar);
 
-Route.get('/categoria', categoriaController.mostrar);
-Route.post('/categoria', categoriaController.guardar);
-Route.get('/categoria/:id', categoriaController.mostrarId);
-Route.put('/categoria/:id', categoriaController.actualizar);
-Route.delete('/categoria/:id', categoriaController.eliminar);
+Route.get('/categoria', authMiddleware.auth, categoriaController.mostrar);
+Route.post('/categoria', authMiddleware.auth, categoriaController.guardar);
+Route.get('/categoria/:id', authMiddleware.auth, categoriaController.mostrarId);
+Route.put('/categoria/:id', authMiddleware.auth, categoriaController.actualizar);
+Route.delete('/categoria/:id', authMiddleware.auth, categoriaController.eliminar);
 
-Route.get('/actividad_evento', actividad_eventoController.mostrar);
-Route.post('/actividad_evento', actividad_eventoController.guardar);
-Route.get('/actividad_evento/:id', actividad_eventoController.mostrarId);
-Route.put('/actividad_evento/:id', actividad_eventoController.actualizar);
-Route.delete('/actividad_evento/:id', actividad_eventoController.eliminar);
+Route.get('/actividad_evento', authMiddleware.auth, actividad_eventoController.mostrar);
+Route.post('/actividad_evento', authMiddleware.auth, actividad_eventoController.guardar);
+Route.get('/actividad_evento/:id', authMiddleware.auth, actividad_eventoController.mostrarId);
+Route.put('/actividad_evento/:id', authMiddleware.auth, actividad_eventoController.actualizar);
+Route.delete('/actividad_evento/:id', authMiddleware.auth, actividad_eventoController.eliminar);
 
-Route.get('/foto', fotoController.mostrar);
-Route.post('/foto', fotoController.guardar);
-Route.get('/foto/:id', fotoController.mostrarId);
-Route.put('/foto/:id', fotoController.actualizar);
-Route.delete('/foto/:id', fotoController.eliminar);
+Route.get('/foto', authMiddleware.auth, fotoController.mostrar);
+Route.post('/foto', authMiddleware.auth, fotoController.guardar);
+Route.get('/foto/:id', authMiddleware.auth, fotoController.mostrarId);
+Route.put('/foto/:id', authMiddleware.auth, fotoController.actualizar);
+Route.delete('/foto/:id', authMiddleware.auth, fotoController.eliminar);
 
-Route.get('/certificado', certificadoController.mostrar);
-Route.post('/certificado', certificadoController.guardar);
-Route.get('/certificado/:id', certificadoController.mostrarId);
-Route.put('/certificado/:id', certificadoController.actualizar);
-Route.delete('/certificado/:id', certificadoController.eliminar);
+Route.get('/certificado', authMiddleware.auth, certificadoController.mostrar);
+Route.post('/certificado', authMiddleware.auth, certificadoController.guardar);
+Route.get('/certificado/:id', authMiddleware.auth, certificadoController.mostrarId);
+Route.put('/certificado/:id', authMiddleware.auth, certificadoController.actualizar);
+Route.delete('/certificado/:id', authMiddleware.auth, certificadoController.eliminar);
 
-Route.get('/actividad_evento_has_expositor', actividad_evento_has_expositorController.mostrar);
-Route.post('/actividad_evento_has_expositor', actividad_evento_has_expositorController.guardar);
-Route.get('/actividad_evento_has_expositor/:id', actividad_evento_has_expositorController.mostrarId);
-Route.put('/actividad_evento_has_expositor/:id', actividad_evento_has_expositorController.actualizar);
-Route.delete('/actividad_evento_has_expositor/:id', actividad_evento_has_expositorController.eliminar);
+Route.get('/actividad_evento_has_expositor', authMiddleware.auth, actividad_evento_has_expositorController.mostrar);
+Route.post('/actividad_evento_has_expositor', authMiddleware.auth, actividad_evento_has_expositorController.guardar);
+Route.get('/actividad_evento_has_expositor/:id', authMiddleware.auth, actividad_evento_has_expositorController.mostrarId);
+Route.put('/actividad_evento_has_expositor/:id', authMiddleware.auth, actividad_evento_has_expositorController.actualizar);
+Route.delete('/actividad_evento_has_expositor/:id', authMiddleware.auth, actividad_evento_has_expositorController.eliminar);
 
-Route.get('/actividad_evento_solicita_ambiente', actividad_evento_solicita_ambienteController.mostrar);
-Route.post('/actividad_evento_solicita_ambiente', actividad_evento_solicita_ambienteController.guardar);
-Route.get('/actividad_evento_solicita_ambiente/:id', actividad_evento_solicita_ambienteController.mostrarId);
-Route.put('/actividad_evento_solicita_ambiente/:id', actividad_evento_solicita_ambienteController.actualizar);
-Route.delete('/actividad_evento_solicita_ambiente/:id', actividad_evento_solicita_ambienteController.eliminar);
+Route.get('/actividad_evento_solicita_ambiente', authMiddleware.auth, actividad_evento_solicita_ambienteController.mostrar);
+Route.post('/actividad_evento_solicita_ambiente', authMiddleware.auth, actividad_evento_solicita_ambienteController.guardar);
+Route.get('/actividad_evento_solicita_ambiente/:id', authMiddleware.auth, actividad_evento_solicita_ambienteController.mostrarId);
+Route.put('/actividad_evento_solicita_ambiente/:id', authMiddleware.auth, actividad_evento_solicita_ambienteController.actualizar);
+Route.delete('/actividad_evento_solicita_ambiente/:id', authMiddleware.auth, actividad_evento_solicita_ambienteController.eliminar);
 
-Route.get('/usuario_se_inscribe_evento', usuario_se_inscribe_eventoController.mostrar);
-Route.post('/usuario_se_inscribe_evento', usuario_se_inscribe_eventoController.guardar);
-Route.get('/usuario_se_inscribe_evento/:id', usuario_se_inscribe_eventoController.mostrarId);
-Route.put('/usuario_se_inscribe_evento/:id', usuario_se_inscribe_eventoController.actualizar);
-Route.delete('/usuario_se_inscribe_evento/:id', usuario_se_inscribe_eventoController.eliminar);
+Route.get('/usuario_se_inscribe_evento', authMiddleware.auth, usuario_se_inscribe_eventoController.mostrar);
+Route.post('/usuario_se_inscribe_evento', authMiddleware.auth, usuario_se_inscribe_eventoController.guardar);
+Route.get('/usuario_se_inscribe_evento/:id', authMiddleware.auth, usuario_se_inscribe_eventoController.mostrarId);
+Route.put('/usuario_se_inscribe_evento/:id', authMiddleware.auth, usuario_se_inscribe_eventoController.actualizar);
+Route.delete('/usuario_se_inscribe_evento/:id', authMiddleware.auth, usuario_se_inscribe_eventoController.eliminar);
 
-Route.get('/usuario_califica_evento', usuario_califica_eventoController.mostrar);
-Route.post('/usuario_califica_evento', usuario_califica_eventoController.guardar);
-Route.get('/usuario_califica_evento/:id', usuario_califica_eventoController.mostrarId);
-Route.put('/usuario_califica_evento/:id', usuario_califica_eventoController.actualizar);
-Route.delete('/usuario_califica_evento/:id', usuario_califica_eventoController.eliminar);
+Route.get('/usuario_califica_evento', authMiddleware.auth, usuario_califica_eventoController.mostrar);
+Route.post('/usuario_califica_evento', authMiddleware.auth, usuario_califica_eventoController.guardar);
+Route.get('/usuario_califica_evento/:id', authMiddleware.auth, usuario_califica_eventoController.mostrarId);
+Route.put('/usuario_califica_evento/:id', authMiddleware.auth, usuario_califica_eventoController.actualizar);
+Route.delete('/usuario_califica_evento/:id', authMiddleware.auth, usuario_califica_eventoController.eliminar);
 
-Route.get('/usuario_reserva_participacion_evento', usuario_reserva_participacion_eventoController.mostrar);
-Route.post('/usuario_reserva_participacion_evento', usuario_reserva_participacion_eventoController.guardar);
-Route.get('/usuario_reserva_participacion_evento/:id', usuario_reserva_participacion_eventoController.mostrarId);
-Route.put('/usuario_reserva_participacion_evento/:id', usuario_reserva_participacion_eventoController.actualizar);
-Route.delete('/usuario_reserva_participacion_evento/:id', usuario_reserva_participacion_eventoController.eliminar);
+Route.get('/usuario_reserva_participacion_evento', authMiddleware.auth, usuario_reserva_participacion_eventoController.mostrar);
+Route.post('/usuario_reserva_participacion_evento', authMiddleware.auth, usuario_reserva_participacion_eventoController.guardar);
+Route.get('/usuario_reserva_participacion_evento/:id', authMiddleware.auth, usuario_reserva_participacion_eventoController.mostrarId);
+Route.put('/usuario_reserva_participacion_evento/:id', authMiddleware.auth, usuario_reserva_participacion_eventoController.actualizar);
+Route.delete('/usuario_reserva_participacion_evento/:id', authMiddleware.auth, usuario_reserva_participacion_eventoController.eliminar);
 
-Route.get('/usuario_comenta_evento', usuario_comenta_eventoController.mostrar);
-Route.post('/usuario_comenta_evento', usuario_comenta_eventoController.guardar);
-Route.get('/usuario_comenta_evento/:id', usuario_comenta_eventoController.mostrarId);
-Route.put('/usuario_comenta_evento/:id', usuario_comenta_eventoController.actualizar);
-Route.delete('/usuario_comenta_evento/:id', usuario_comenta_eventoController.eliminar);
+Route.get('/usuario_comenta_evento', authMiddleware.auth, usuario_comenta_eventoController.mostrar);
+Route.post('/usuario_comenta_evento', authMiddleware.auth, usuario_comenta_eventoController.guardar);
+Route.get('/usuario_comenta_evento/:id', authMiddleware.auth, usuario_comenta_eventoController.mostrarId);
+Route.put('/usuario_comenta_evento/:id', authMiddleware.auth, usuario_comenta_eventoController.actualizar);
+Route.delete('/usuario_comenta_evento/:id', authMiddleware.auth, usuario_comenta_eventoController.eliminar);
 
-Route.get('/usuario_comenta_actividad_evento', usuario_comenta_actividad_eventoController.mostrar);
-Route.post('/usuario_comenta_actividad_evento', usuario_comenta_actividad_eventoController.guardar);
-Route.get('/usuario_comenta_actividad_evento/:id', usuario_comenta_actividad_eventoController.mostrarId);
-Route.put('/usuario_comenta_actividad_evento/:id', usuario_comenta_actividad_eventoController.actualizar);
-Route.delete('/usuario_comenta_actividad_evento/:id', usuario_comenta_actividad_eventoController.eliminar);
+Route.get('/usuario_comenta_actividad_evento', authMiddleware.auth, usuario_comenta_actividad_eventoController.mostrar);
+Route.post('/usuario_comenta_actividad_evento', authMiddleware.auth, usuario_comenta_actividad_eventoController.guardar);
+Route.get('/usuario_comenta_actividad_evento/:id', authMiddleware.auth, usuario_comenta_actividad_eventoController.mostrarId);
+Route.put('/usuario_comenta_actividad_evento/:id', authMiddleware.auth, usuario_comenta_actividad_eventoController.actualizar);
+Route.delete('/usuario_comenta_actividad_evento/:id', authMiddleware.auth, usuario_comenta_actividad_eventoController.eliminar);
 
-Route.get('/usuario_asiste_actividad_evento', usuario_asiste_actividad_eventoController.mostrar);
-Route.post('/usuario_asiste_actividad_evento', usuario_asiste_actividad_eventoController.guardar);
-Route.get('/usuario_asiste_actividad_evento/:id', usuario_asiste_actividad_eventoController.mostrarId);
-Route.put('/usuario_asiste_actividad_evento/:id', usuario_asiste_actividad_eventoController.actualizar);
-Route.delete('/usuario_asiste_actividad_evento/:id', usuario_asiste_actividad_eventoController.eliminar);
+Route.get('/usuario_asiste_actividad_evento', authMiddleware.auth, usuario_asiste_actividad_eventoController.mostrar);
+Route.post('/usuario_asiste_actividad_evento', authMiddleware.auth, usuario_asiste_actividad_eventoController.guardar);
+Route.get('/usuario_asiste_actividad_evento/:id', authMiddleware.auth, usuario_asiste_actividad_eventoController.mostrarId);
+Route.put('/usuario_asiste_actividad_evento/:id', authMiddleware.auth, usuario_asiste_actividad_eventoController.actualizar);
+Route.delete('/usuario_asiste_actividad_evento/:id', authMiddleware.auth, usuario_asiste_actividad_eventoController.eliminar);

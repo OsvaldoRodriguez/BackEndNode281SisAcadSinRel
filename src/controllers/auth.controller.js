@@ -30,7 +30,6 @@ export default {
     let payload = {
       id: usuario.id,
       nom_usuario: usuario.nom_usuario,
-      contrasenia: usuario.contrasenia,
       correo: usuario.correo,
       time: new Date(),
     };
@@ -38,37 +37,73 @@ export default {
       expiresIn: 3600,
     });
 
+    // ahora se buscara el rol de ese usuario
+    const user_rol = await models.Usuario.findAll({
+        where: {
+          id: usuario.id,
+        },
+        include : {
+          model : models.Rol
+        }
+      });
+
+      // console.log("llando  rol", user_rol);
+      // console.log(' mostrando solo rol', user_rol[0].Rols[0].descripcion)
+      let lista_roles = []
+      for(let i = 0; i < user_rol[0].Rols.length; i++) {
+        lista_roles.push(user_rol[0].Rols[i].descripcion)
+      }
+      // console.log("lista roles ", lista_roles);
+
+    
+
     return res.status(200).json({
       mensaje: "Todo OK",
       access_token: token,
-      usuario: usuario,
+      usuario: nom_usuario,
+      rol : lista_roles,
       error: false,
     });
   },
 
   async register(req, res) {
-    const { nombre, paterno, materno, nom_usuario, contrasenia, correo} = req.body;
+    const { nombre, paterno, materno, nom_usuario, contrasenia, correo } =
+      req.body;
     if (nom_usuario) {
       // verificando si ya existe ese usuario
       let usuario = await models.Usuario.findOne({
         where: { nom_usuario: nom_usuario },
       });
-
       if (!usuario) {
         // cifrar password
 
         const hash = await bcrypt.hash(contrasenia, 12);
-        await models.Persona.create({nombre, paterno, materno});
+        const PersonaCreada = await models.Persona.create({ nombre, paterno, materno });
 
-        const PersonaCreada = await models.Persona.findAll({
-          where : {
-            nombre : nombre, paterno : paterno, materno : materno
-          }
+        // const PersonaCreada = await models.Persona.findAll({
+        //   where: {
+        //     nombre: nombre,
+        //     paterno: paterno,
+        //     materno: materno,
+        //   },
+        // });
+        await PersonaCreada.reload();
+
+        // let iD = PersonaCreada[0].id;
+
+        const UsuarioSave = await models.Usuario.create({
+          nom_usuario: nom_usuario,
+          contrasenia: hash,
+          correo: correo,
+          PersonaId: PersonaCreada.id,
         });
 
-        let iD = PersonaCreada[0].id
+        UsuarioSave.reload();
 
-        await models.Usuario.create({nom_usuario : nom_usuario, contrasenia : hash, correo : correo, PersonaId : iD});
+        await models.Usuario_Tiene_Rol.create({
+          UsuarioId: UsuarioSave.id,
+          RolId: 3,
+        });
         return res
           .status(201)
           .json({ mensaje: "Usuario Registrado Correctamente" });
@@ -81,12 +116,105 @@ export default {
       res.status(422).json({ mensaje: "El Usuario es Obligatorio" });
     }
   },
-  async perfil(req, res) {
-    return res.status(200).json({ mensaje : "Ok", user : req.nom_usuario});
-    
-  },
-  async logout(req, res) {
 
-    
+  async register_user(req, res) {
+    console.log("esta llegando aqui");
+    console.log(req.body);
+    const { nom_usuario, contrasenia, correo, PersonaId, RolId } = req.body;
+    if (nom_usuario) {
+      // verificando si ya existe ese usuario
+      let usuario = await models.Usuario.findOne({
+        where: { nom_usuario: nom_usuario },
+      });
+
+      if (!usuario) {
+        // cifrar password
+
+        const hash = await bcrypt.hash(contrasenia, 12);
+        const UsuarioSave = await models.Usuario.create({
+          nom_usuario: nom_usuario,
+          contrasenia: hash,
+          correo: correo,
+          PersonaId: PersonaId,
+        });
+        await UsuarioSave.reload();
+        console.log("Recuperando Usuario ", UsuarioSave);
+
+        await models.Usuario_Tiene_Rol.create({
+          UsuarioId: UsuarioSave.id,
+          RolId: RolId,
+        });
+        return res
+          .status(201)
+          .json({ mensaje: "Usuario Registrado Correctamente Por Admin" });
+      } else {
+        return res
+          .status(422)
+          .json({ mensaje: `El usuario ${nom_usuario} ya existe` });
+      }
+    } else {
+      res.status(422).json({ mensaje: "El Usuario es Obligatorio" });
+    }
   },
+
+  async actualizar(req, res) {
+    // console.log("esta llegando aqui para actualizar");
+    // console.log(req);
+    let ID = req.params.id;
+    console.log("lo que esta lleagnod", req.body);
+    const { nom_usuario, contrasenia, correo, PersonaId, RolId } = req.body;
+
+    // verificando si ya existe ese usuario
+
+    try {
+      const hash = await bcrypt.hash(contrasenia, 12);
+      console.log("cifreando passw ", hash);
+      const UsuarioSave = await models.Usuario.update(
+        {
+          nom_usuario: nom_usuario,
+          contrasenia: hash,
+          correo: correo,
+          PersonaId: PersonaId,
+        },
+        {
+          where: {
+            id: ID,
+          },
+        }
+      );
+      console.log("actualiza el usuario");
+      let usuario_rec = await models.Usuario.findOne({
+        order: [["updatedAt", "DESC"]],
+      });
+      console.log(
+        "resupera el actualizado ",
+        usuario_rec,
+        usuario_rec.id,
+        RolId
+      );
+
+      // ahora a actualizar el rol
+        let auxi = await models.Usuario_Tiene_Rol.update({
+          RolId: RolId,
+        }, {
+          where : {
+            UsuarioId : ID
+          }
+        });
+      
+
+      console.log("depues de actualizar rol", auxi);
+
+      return res
+        .status(201)
+        .json({ mensaje: "Usuario Registrado Correctamente Por Admin" });
+    } catch (error) {
+      res.status(500).json({ mensaje: "Error  al Actualizar" });
+    }
+  },
+
+  async perfil(req, res) {
+    return res.status(200).json({ mensaje: "Ok", user: req.nom_usuario });
+  },
+  async logout(req, res) {},
 };

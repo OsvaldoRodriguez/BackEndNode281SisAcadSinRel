@@ -7,7 +7,7 @@ export default {
           model: models.Usuario
         }
       });
-      res.status(200).json({ mensaje: "Todo Okey", body: data });
+      res.status(200).json(data);
     } catch (error) {
       console.log(error);
       res.status(500).json({ mensaje: "Error al listar" });
@@ -30,11 +30,14 @@ export default {
     console.log(ID);
     try {
       const data = await models.Actividad_Evento.findAll({
+        include : {
+          model : models.Categoria
+        },
         where: {
-          id: ID,
+          EventoId: ID,
         },
       });
-      res.status(200).json({ mensaje: "Todo Okey", body: data });
+      res.status(200).json(data);
     } catch (error) {
       res.status(500).json({ mensaje: "Error al listar por iD" });
     }

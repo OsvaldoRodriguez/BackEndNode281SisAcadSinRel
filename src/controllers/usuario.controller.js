@@ -5,11 +5,8 @@ export default {
     try {
       const data = await models.Usuario.findAll({
         include : {
-          model : models.Rol,
-          where : {
-          }
+          model : models.Rol
         }, 
-        
       });
       res.status(200).json(data);
     } catch (error) {
@@ -38,6 +35,9 @@ export default {
         where: {
           id: ID,
         },
+        include : {
+          model : models.Rol
+        }
       });
       res.status(200).json({ mensaje: "Todo Okey", body: data });
     } catch (error) {

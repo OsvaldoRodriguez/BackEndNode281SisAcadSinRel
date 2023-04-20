@@ -4,7 +4,7 @@ export default {
     try {
       const data = await models.Evento.findAll({
         include : {
-          model : models.Usuario
+          model : models.Institucion
         }
       });
       res.status(200).json(data);

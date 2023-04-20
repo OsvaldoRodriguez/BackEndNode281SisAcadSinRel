@@ -4,11 +4,11 @@ export default {
     // console.log(models.Usuario.rawAttributes);
     try {
       const data = await models.Persona.findAll({
-        include : {
-          model : models.Usuario
-        }
+        // include : {
+        //   model : models.Usuario
+        // }
       });
-      res.status(200).json({ mensaje: "Todo Okey", body: data });
+      res.status(200).json(data);
     } catch (error) {
       console.log(error);
       res.status(500).json({ mensaje: "Error al listar" });

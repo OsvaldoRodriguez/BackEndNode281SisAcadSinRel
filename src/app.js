@@ -1,7 +1,6 @@
 import express from "express";
 import { Route } from "./routes/index";
 import cors from "cors";
-import { Sequelize } from "./database/models";
 const app = express();
 // const req = require("./db/conexion");
 // import modelitos from './models/modelos'

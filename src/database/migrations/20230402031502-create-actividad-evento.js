@@ -12,7 +12,10 @@ module.exports = {
       fecha: {
         type: Sequelize.DATE
       },
-      horario: {
+      horario_ini: {
+        type: Sequelize.TIME
+      },
+      horario_fin: {
         type: Sequelize.TIME
       },
       nombre: {

@@ -50,7 +50,8 @@ module.exports = (sequelize, DataTypes) => {
   }
   Actividad_Evento.init({
     fecha: DataTypes.DATE,
-    horario: DataTypes.TIME,
+    horario_ini: DataTypes.TIME,
+    horario_fin: DataTypes.TIME,
     nombre: DataTypes.STRING,
     CategoriaId: DataTypes.INTEGER,
     EventoId: DataTypes.INTEGER
