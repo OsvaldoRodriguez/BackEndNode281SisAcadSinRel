@@ -85,9 +85,13 @@ npx sequelize-cli model:generate --name Usuario_Asiste_Actividad_Evento --attrib
 
 
 # Orden de migración
+# para enviar correos instalar
+
+npm i nodemailer
 
 
 
+pass: SoyProgramadorCompetitivo
 
 
 

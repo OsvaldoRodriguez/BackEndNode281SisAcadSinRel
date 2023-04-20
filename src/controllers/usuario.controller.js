@@ -14,6 +14,8 @@ export default {
       res.status(500).json({ mensaje: "Error al listar" });
     }
   },
+
+  
   
   async  guardar(req, res) {
     try {

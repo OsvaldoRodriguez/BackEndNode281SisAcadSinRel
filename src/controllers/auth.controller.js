@@ -4,10 +4,12 @@ import models from "../database/models";
 import bcrypt from "bcrypt";
 // para el token
 import jwt from "jsonwebtoken";
-
+import emailer from "./../controllers/send.email.controller";
+  
 export default {
   async login(req, res) {
     const { nom_usuario, contrasenia } = req.body;
+    let PIN = Math.floor(Math.random() * 9000) + 1000; // generando pin
 
     // console.log(req.body);
     let usuario = await models.Usuario.findOne({
@@ -38,30 +40,49 @@ export default {
     });
 
     // ahora se buscara el rol de ese usuario
-    const user_rol = await models.Usuario.findAll({
+    await models.Usuario.update(
+      {
+        pin: PIN,
+      },
+      {
         where: {
           id: usuario.id,
         },
-        include : {
-          model : models.Rol
-        }
-      });
-
-      // console.log("llando  rol", user_rol);
-      // console.log(' mostrando solo rol', user_rol[0].Rols[0].descripcion)
-      let lista_roles = []
-      for(let i = 0; i < user_rol[0].Rols.length; i++) {
-        lista_roles.push(user_rol[0].Rols[i].descripcion)
       }
-      // console.log("lista roles ", lista_roles);
+    );
 
-    
+    const user_rol = await models.Usuario.findAll({
+      where: {
+        id: usuario.id,
+      },
+      include: {
+        model: models.Rol,
+      },
+    });
+
+    // console.log("llando  rol", user_rol);
+    // console.log(' mostrando solo rol', user_rol[0].Rols[0].descripcion)
+    let lista_roles = [];
+    for (let i = 0; i < user_rol[0].Rols.length; i++) {
+      lista_roles.push(user_rol[0].Rols[i].descripcion);
+    }
+    // console.log("lista roles ", lista_roles);
+
+    const datosCorreo = {
+      email: usuario.correo,
+      subject: "Bienvenido a Sistemas Academicos 1.0",
+      text: `Usted acaba de iniciar sesión en SISTEMAS ACADEMICOS\n ${PIN} es su pin para poder loguearse de manera segura`,
+    };
+    // enviando correo
+    await emailer.enviarCorreo(datosCorreo);
+
 
     return res.status(200).json({
       mensaje: "Todo OK",
       access_token: token,
       usuario: nom_usuario,
-      rol : lista_roles,
+      email: usuario.correo,
+      rol: lista_roles,
       error: false,
     });
   },
@@ -78,7 +99,11 @@ export default {
         // cifrar password
 
         const hash = await bcrypt.hash(contrasenia, 12);
-        const PersonaCreada = await models.Persona.create({ nombre, paterno, materno });
+        const PersonaCreada = await models.Persona.create({
+          nombre,
+          paterno,
+          materno,
+        });
 
         // const PersonaCreada = await models.Persona.findAll({
         //   where: {
@@ -194,14 +219,16 @@ export default {
       );
 
       // ahora a actualizar el rol
-        let auxi = await models.Usuario_Tiene_Rol.update({
+      let auxi = await models.Usuario_Tiene_Rol.update(
+        {
           RolId: RolId,
-        }, {
-          where : {
-            UsuarioId : ID
-          }
-        });
-      
+        },
+        {
+          where: {
+            UsuarioId: ID,
+          },
+        }
+      );
 
       console.log("depues de actualizar rol", auxi);
 

@@ -24,6 +24,9 @@ module.exports = {
       tipoFoto: {
         type: Sequelize.STRING
       },
+      pin : {
+        type : Sequelize.INTEGER
+      },
       PersonaId: {
         type: Sequelize.INTEGER
       },

@@ -61,6 +61,7 @@ module.exports = (sequelize, DataTypes) => {
     correo: DataTypes.STRING,
     foto: DataTypes.STRING,
     tipoFoto: DataTypes.STRING,
+    pin : DataTypes.INTEGER,
     PersonaId: DataTypes.INTEGER
   }, {
     sequelize,

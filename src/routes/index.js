@@ -23,7 +23,7 @@ import usuario_reserva_participacion_eventoController from '../controllers/usuar
 import usuario_comenta_eventoController from '../controllers/usuario.comenta.evento.controller'
 import usuario_comenta_actividad_eventoController from '../controllers/usuario.comenta.actividad.evento.controller'
 import usuario_asiste_actividad_eventoController from '../controllers/usuario.asiste.actividad.evento.controller'
-
+import sendEmailController from './../controllers/send.email.controller'
 
 import * as authMiddleware from '../middlewares/auth.middleware'
 export const Route = Router();
@@ -36,8 +36,7 @@ Route.post('/auth/register_user', authController.register_user)
 Route.put('/auth/actualizar/:id', authMiddleware.auth, authController.actualizar)
 Route.get('/auth/perfil', authMiddleware.auth, authController.perfil)
 Route.post('/auth/logout', authMiddleware.auth, authController.logout)
-
-
+Route.post('/auth/sendEmail', sendEmailController.enviarCorreo)
 
 
 // creando los endpoints (rutas)
