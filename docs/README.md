@@ -82,19 +82,20 @@ npx sequelize-cli model:generate --name Usuario_Comenta_Actividad_Evento --attri
 ### Usuario_Asiste_Actividad_Evento *
 npx sequelize-cli model:generate --name Usuario_Asiste_Actividad_Evento --attributes UsuarioId:integer,Actividad_EventoId:integer
 
+### para infor del sistema *
+npx sequelize-cli model:generate --name InformacionSistema --attributes logo:string,quienes_somos:string,mision:string,vision:string,celular:string,correo:string,direccion:string,facebook:string,twitter:string,instagram:string
 
 
 # Orden de migración
 # para enviar correos instalar
 
 npm i nodemailer
-
-
-
 pass: SoyProgramadorCompetitivo
 
 
 
+## REsetear una tabla
+ALTER TABLE usuarios AUTO_INCREMENT = 1;
 
 
 

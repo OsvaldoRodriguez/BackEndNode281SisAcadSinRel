@@ -24,7 +24,7 @@ import usuario_comenta_eventoController from '../controllers/usuario.comenta.eve
 import usuario_comenta_actividad_eventoController from '../controllers/usuario.comenta.actividad.evento.controller'
 import usuario_asiste_actividad_eventoController from '../controllers/usuario.asiste.actividad.evento.controller'
 import sendEmailController from './../controllers/send.email.controller'
-
+import info_sistemaController from './../controllers/informacion_sistema.controller'
 import * as authMiddleware from '../middlewares/auth.middleware'
 export const Route = Router();
 
@@ -38,6 +38,9 @@ Route.get('/auth/perfil', authMiddleware.auth, authController.perfil)
 Route.post('/auth/logout', authMiddleware.auth, authController.logout)
 Route.post('/auth/sendEmail', sendEmailController.enviarCorreo)
 
+//infosistema
+Route.post('/infosistema', authMiddleware.auth, info_sistemaController.guardar)
+Route.get('/infosistema', authMiddleware.auth, info_sistemaController.mostrar)
 
 // creando los endpoints (rutas)
 Route.get('/persona', authMiddleware.auth, personaController.mostrar);

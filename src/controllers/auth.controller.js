@@ -5,7 +5,7 @@ import bcrypt from "bcrypt";
 // para el token
 import jwt from "jsonwebtoken";
 import emailer from "./../controllers/send.email.controller";
-  
+
 export default {
   async login(req, res) {
     const { nom_usuario, contrasenia } = req.body;
@@ -36,7 +36,7 @@ export default {
       time: new Date(),
     };
     const token = jwt.sign(payload, "MI_CODIGO_SECRETO", {
-      expiresIn: 3600,
+      expiresIn: 360000000,
     });
 
     // ahora se buscara el rol de ese usuario
@@ -74,8 +74,8 @@ export default {
       text: `Usted acaba de iniciar sesión en SISTEMAS ACADEMICOS\n ${PIN} es su pin para poder loguearse de manera segura`,
     };
     // enviando correo
-    await emailer.enviarCorreo(datosCorreo);
 
+    // await emailer.enviarCorreo(datosCorreo);
 
     return res.status(200).json({
       mensaje: "Todo OK",
