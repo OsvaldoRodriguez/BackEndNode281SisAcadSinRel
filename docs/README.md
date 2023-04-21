@@ -109,6 +109,17 @@ ALTER TABLE usuarios AUTO_INCREMENT = 1;
 npx sequelize-auto -o "./src/modelos_auto" -d mydb -h localhost -u root -p 3306  -e mysql
 
 
+# Para guardar imagenes con uso de multer
+
+
+
+
+
+
+
+
+
+
 
 
 

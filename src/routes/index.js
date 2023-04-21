@@ -26,7 +26,26 @@ import usuario_asiste_actividad_eventoController from '../controllers/usuario.as
 import sendEmailController from './../controllers/send.email.controller'
 import info_sistemaController from './../controllers/informacion_sistema.controller'
 import * as authMiddleware from '../middlewares/auth.middleware'
+import multer from 'multer'
+
+
 export const Route = Router();
+
+// para subir imagenes (esta en su mismo crud)
+const storage = multer.diskStorage({
+    destination: function (req, file, cb) {
+      cb(null, './public/archivos/imagenes/eventos')
+    },
+    filename: function (req, file, cb) {
+      const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9)
+      cb(null, uniqueSuffix + '-' + file.originalname)
+    }
+  })
+  
+  const upload = multer({ storage: storage })
+// subida de imagenes
+Route.post('/evento/:id/actualizar-imagen', upload.single("imagen"), eventoController.actualizarImagen);
+
 
 // login
 // hay que proteger el pefil, logout

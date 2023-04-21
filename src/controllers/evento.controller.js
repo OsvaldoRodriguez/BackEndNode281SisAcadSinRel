@@ -3,9 +3,9 @@ export default {
   async mostrar(req, res) {
     try {
       const data = await models.Evento.findAll({
-        include : {
-          model : models.Institucion
-        }
+        include: {
+          model: models.Institucion,
+        },
       });
       res.status(200).json(data);
     } catch (error) {
@@ -66,5 +66,25 @@ export default {
     } catch (error) {
       res.status(500).json({ mensaje: "Error al eliminar" });
     }
+  },
+  async actualizarImagen(req, res) {
+    // capturando la imagen
+    let ID = req.params.id;
+    let datos = {} // datos para actualizar
+    if(req.file){
+      datos.logo = req.file.filename;
+    }
+    try {
+      await models.Evento.update(datos, {
+        where : {
+          id : ID
+        }
+      })
+      res.status(200).json({mensaje : "Foto actualizada"})
+    } catch (error) {
+      res.status(401).json(error);
+    }
+
+
   },
 };
