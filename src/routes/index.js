@@ -31,20 +31,21 @@ import multer from 'multer'
 
 export const Route = Router();
 
+
 // para subir imagenes (esta en su mismo crud)
-const storage = multer.diskStorage({
+function almacenar(direccion){
+  const storage = multer.diskStorage({
     destination: function (req, file, cb) {
-      cb(null, './public/archivos/imagenes/eventos')
+      cb(null, direccion)
     },
     filename: function (req, file, cb) {
       const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9)
       cb(null, uniqueSuffix + '-' + file.originalname)
     }
   })
+  return storage;
+}
   
-  const upload = multer({ storage: storage })
-// subida de imagenes
-Route.post('/evento/:id/actualizar-imagen', upload.single("imagen"), eventoController.actualizarImagen);
 
 
 // login
@@ -58,8 +59,11 @@ Route.post('/auth/logout', authMiddleware.auth, authController.logout)
 Route.post('/auth/sendEmail', sendEmailController.enviarCorreo)
 
 //infosistema
-Route.post('/infosistema', authMiddleware.auth, info_sistemaController.guardar)
-Route.get('/infosistema', authMiddleware.auth, info_sistemaController.mostrar)
+Route.post('/infosistema', info_sistemaController.guardar)
+Route.get('/infosistema', info_sistemaController.mostrar)
+Route.get('/infosistema/:id', authMiddleware.auth, info_sistemaController.mostrarId)
+var upload = multer({ storage: almacenar('./public/archivos/imagenes/infosistema') })
+Route.post('/infosistema/:id/actualizar-imagen', upload.single("imagen"), info_sistemaController.actualizarImagen);
 
 // creando los endpoints (rutas)
 Route.get('/persona', authMiddleware.auth, personaController.mostrar);
@@ -75,6 +79,9 @@ Route.post('/usuario', authMiddleware.auth, usuarioController.guardar);
 Route.get('/usuario/:id',  usuarioController.mostrarId);
 Route.put('/usuario/:id', authMiddleware.auth, usuarioController.actualizar);
 Route.delete('/usuario/:id', authMiddleware.auth, usuarioController.eliminar);
+var upload = multer({ storage: almacenar('./public/archivos/imagenes/usuarios') })
+Route.post('/usuario/:id/actualizar-imagen', upload.single("imagen"), usuarioController.actualizarImagen);
+
 
 //Rol
 Route.get('/rol', authMiddleware.auth, rolController.mostrar);
@@ -121,6 +128,10 @@ Route.post('/evento', authMiddleware.auth, eventoController.guardar);
 Route.get('/evento/:id', authMiddleware.auth, eventoController.mostrarId);
 Route.put('/evento/:id', authMiddleware.auth, eventoController.actualizar);
 Route.delete('/evento/:id', authMiddleware.auth, eventoController.eliminar);
+// solo eso para subir pasar la direecion
+var upload = multer({ storage: almacenar('./public/archivos/imagenes/eventos') })
+Route.post('/evento/:id/actualizar-imagen', upload.single("imagen"), eventoController.actualizarImagen);
+
 
 Route.get('/recurso', authMiddleware.auth, recursoController.mostrar);
 Route.post('/recurso', authMiddleware.auth, recursoController.guardar);

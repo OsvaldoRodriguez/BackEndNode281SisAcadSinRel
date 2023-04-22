@@ -74,6 +74,7 @@ export default {
     if(req.file){
       datos.logo = req.file.filename;
     }
+    
     try {
       await models.Evento.update(datos, {
         where : {
