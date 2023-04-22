@@ -186,7 +186,7 @@ export default {
     // console.log("esta llegando aqui para actualizar");
     // console.log(req);
     let ID = req.params.id;
-    console.log("lo que esta lleagnod", req.body);
+    // console.log("lo que esta lleagnod", req.body);
     const { nom_usuario, contrasenia, correo, PersonaId, RolId } = req.body;
 
     // verificando si ya existe ese usuario
@@ -231,6 +231,50 @@ export default {
       );
 
       console.log("depues de actualizar rol", auxi);
+
+      return res
+        .status(201)
+        .json({ mensaje: "Usuario Registrado Correctamente Por Admin" });
+    } catch (error) {
+      res.status(500).json({ mensaje: "Error  al Actualizar" });
+    }
+  },
+
+  async actualizarPerfil(req, res) {
+    // console.log("esta llegando aqui para actualizar");
+    // console.log(req);
+    let ID = req.params.id;
+    // console.log("lo que esta lleagnod", req.body);
+    const {contrasenia, correo} = req.body;
+
+    // verificando si ya existe ese usuario
+
+    try {
+      const hash = await bcrypt.hash(contrasenia, 12);
+      console.log("cifreando passw ", hash);
+      const UsuarioSave = await models.Usuario.update(
+        {
+          contrasenia: hash,
+          correo: correo,
+        },
+        {
+          where: {
+            id: ID,
+          },
+        }
+      );
+      // console.log("actualiza el usuario");
+      let usuario_rec = await models.Usuario.findOne({
+        order: [["updatedAt", "DESC"]],
+      });
+      // console.log(
+      //   "resupera el actualizado ",
+      //   usuario_rec,
+      //   usuario_rec.id,
+      //   RolId
+      // );
+
+      // ahora a actualizar el rol
 
       return res
         .status(201)

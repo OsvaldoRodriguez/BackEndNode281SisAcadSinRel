@@ -1,4 +1,5 @@
 import models from "./../database/models";
+import bcrypt from "bcrypt";
 export default {
   
   async mostrar(req, res) {
@@ -49,8 +50,16 @@ export default {
   ,
   async actualizar(req, res) {
     let ID = req.params.id; // cuando es por parametros en params esta
+    console.log("llega id", ID);
     try {
-      const data = await models.Usuario.update(req.body, {
+      console.log(req.body);
+      const hash = await bcrypt.hash(req.body.contrasenia, 12);
+      console.log("hast de pasww", hash);
+      const data = await models.Usuario.update({
+        nom_usuario : req.body.nom_usuario,
+        contrasenia: hash,
+        correo : res.body.correo
+      }, {
         where: {
           id: ID,
         },

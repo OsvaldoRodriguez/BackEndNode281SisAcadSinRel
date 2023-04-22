@@ -2,6 +2,7 @@ import express from "express";
 import { Route } from "./routes/index";
 import cors from "cors";
 import bodyParser from "body-parser";
+import {bcrypt} from 'bcrypt'
 const app = express();
 
 
@@ -17,6 +18,10 @@ app.use(express.static('public'));
 // habilitando rutas
 app.use('/api', Route);
 
+
 app.listen(3000, () => {
   console.log("servidor corriendo****");
+
 });
+
+

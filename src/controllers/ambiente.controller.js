@@ -33,10 +33,10 @@ export default {
     try {
       const data = await models.Ambiente.findAll({
         where: {
-          id: ID,
+          InstitucionId: ID,
         },
       });
-      res.status(200).json({ mensaje: "Todo Okey", body: data });
+      res.status(200).json(data);
     } catch (error) {
       res.status(500).json({ mensaje: "Error al listar por iD" });
     }

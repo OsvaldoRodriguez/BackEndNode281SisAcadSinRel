@@ -19,7 +19,7 @@ export default {
     try {
       // cuando es peticion post es body se guarda los datos
       const data = await models.Actividad_Evento_Solicita_Ambiente.create(req.body);
-      res.status(200).json({ mensaje: "Todo Okey", body: data });
+      res.status(200).json(data);
     } catch (error) {
       console.log(error);
       res.status(500).json({ mensaje: "Error al Crear dato" });
