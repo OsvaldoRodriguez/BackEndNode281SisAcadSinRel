@@ -4,8 +4,8 @@ export default {
     try {
       const data = await models.Actividad_Evento.findAll({
         include: {
-          model: models.Usuario
-        }
+          model: models.Usuario,
+        },
       });
       res.status(200).json(data);
     } catch (error) {
@@ -16,9 +16,19 @@ export default {
 
   async guardar(req, res) {
     try {
+      // console.log("lleega a guarda la activaidadslkdfjsldkj ", req.body);
       // cuando es peticion post es body se guarda los datos
       const data = await models.Actividad_Evento.create(req.body);
-      res.status(200).json({ mensaje: "Todo Okey", body: data });
+
+      // recuperando
+      await data.reload();
+      // console.log("datos recuperados", data.dataValues);
+      await models.Actividad_Evento_Has_Expositor.create({
+        ExpositorId: req.body.ExpositorId,
+        Actividad_EventoId: data.dataValues.id,
+      });
+
+      res.status(200).json(data);
     } catch (error) {
       console.log(error);
       res.status(500).json({ mensaje: "Error al Crear dato" });
@@ -30,9 +40,11 @@ export default {
     console.log(ID);
     try {
       const data = await models.Actividad_Evento.findAll({
-        include : {
-          model : models.Categoria
-        },
+        include: [
+          {
+            model: models.Categoria,
+          },
+        ],
         where: {
           EventoId: ID,
         },
@@ -42,15 +54,37 @@ export default {
       res.status(500).json({ mensaje: "Error al listar por iD" });
     }
   },
-  
+
   async actualizar(req, res) {
+
+    const nuevos_datos = {
+      nombre : req.body.nombre,
+      fecha : req.body.fecha,
+      horario_ini : req.body.horario_ini,
+      horario_fin : req.body.horario_fin,
+      CategoriaId : req.body.CategoriaId,
+      EventoId : req.body.EventoId
+    }
+    console.log( "llegando datos", req.body );
     let ID = req.params.id; // cuando es por parametros en params esta
     try {
-      const data = await models.Actividad_Evento.update(req.body, {
+      const data = await models.Actividad_Evento.update(nuevos_datos, {
         where: {
           id: ID,
         },
       });
+
+      // console.log("datos recuperados", data.dataValues);
+      await models.Actividad_Evento_Has_Expositor.update(
+        {
+          ExpositorId: req.body.ExpositorId,
+        },
+        {
+          where: {
+            Actividad_EventoId:  ID,
+          },
+        }
+      );
       res
         .status(200)
         .json({ mensaje: "Actualizado Correctamente", body: data });

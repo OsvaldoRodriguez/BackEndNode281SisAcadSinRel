@@ -15,6 +15,19 @@ export default {
       res.status(500).json({ mensaje: "Error al listar" });
     }
   },
+  async mostrarConPersonaYBol(req, res) {
+    try {
+      const data = await models.Usuario.findAll({
+        include : {
+          model : models.Persona
+        }, 
+      });
+      res.status(200).json(data);
+    } catch (error) {
+      console.log(error);
+      res.status(500).json({ mensaje: "Error al listar" });
+    }
+  },
 
   
   

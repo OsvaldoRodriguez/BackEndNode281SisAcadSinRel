@@ -76,6 +76,7 @@ Route.delete('/persona/:id', authMiddleware.auth, personaController.eliminar);
 
 // para usuario
 Route.get('/usuario', authMiddleware.auth, usuarioController.mostrar);
+Route.get('/usuario-persona', authMiddleware.auth, usuarioController.mostrarConPersonaYBol);
 Route.post('/usuario', authMiddleware.auth, usuarioController.guardar);
 Route.get('/usuario/:id',  usuarioController.mostrarId);
 Route.put('/usuario/:id', authMiddleware.auth, usuarioController.actualizar);
@@ -107,6 +108,7 @@ Route.put('/expositor/:id', authMiddleware.auth, expositorController.actualizar)
 Route.delete('/expositor/:id', authMiddleware.auth, expositorController.eliminar);
 
 Route.get('/material_de_actividad', authMiddleware.auth, material_de_actividadController.mostrar);
+Route.put('/material_de_actividad_by_expositor/:id', authMiddleware.auth, material_de_actividadController.mostrarIdByExpositor);
 Route.post('/material_de_actividad', authMiddleware.auth, material_de_actividadController.guardar);
 Route.get('/material_de_actividad/:id', authMiddleware.auth, material_de_actividadController.mostrarId);
 Route.put('/material_de_actividad/:id', authMiddleware.auth, material_de_actividadController.actualizar);

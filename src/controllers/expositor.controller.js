@@ -4,8 +4,14 @@ export default {
     // console.log(models.Usuario.rawAttributes);
     try {
       const data = await models.Expositor.findAll({
+        include : {
+          model : models.Usuario,
+          include : {
+            model : models.Persona
+          }
+        }
       });
-      res.status(200).json({ mensaje: "Todo Okey", body: data });
+      res.status(200).json(data);
     } catch (error) {
       console.log(error);
       res.status(500).json({ mensaje: "Error al listar" });
@@ -16,7 +22,7 @@ export default {
     try {
       // cuando es peticion post es body se guarda los datos
       const data = await models.Expositor.create(req.body);
-      res.status(200).json({ mensaje: "Todo Okey", body: data });
+      res.status(200).json(data);
     } catch (error) {
       console.log(error);
       res.status(500).json({ mensaje: "Error al Crear dato" });
@@ -33,7 +39,7 @@ export default {
           id: ID,
         },
       });
-      res.status(200).json({ mensaje: "Todo Okey", body: data });
+      res.status(200).json(data);
     } catch (error) {
       res.status(500).json({ mensaje: "Error al listar por iD" });
     }
@@ -49,7 +55,7 @@ export default {
       });
       res
         .status(200)
-        .json({ mensaje: "Actualizado Correctamente", body: data });
+        .json(data);
     } catch (error) {
       res.status(500).json({ mensaje: "Error  al Actualizar" });
     }

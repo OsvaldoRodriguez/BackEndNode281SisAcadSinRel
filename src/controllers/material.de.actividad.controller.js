@@ -32,10 +32,29 @@ export default {
     // cuando es por parametros -> el valor esta en params
     let ID = req.params.id;
     console.log(ID);
+    console.log("body", req)
     try {
       const data = await models.Material_De_Actividad.findAll({
         where: {
           ExpositorId: ID,
+        },
+      });
+      res.status(200).json(data);
+    } catch (error) {
+      res.status(500).json({ mensaje: "Error al listar por iD" });
+    }
+  },
+
+  async mostrarIdByExpositor(req, res) {
+    // cuando es por parametros -> el valor esta en params
+    let ID = req.params.id;
+    console.log(ID);
+    console.log("body", req.body)
+    try {
+      const data = await models.Material_De_Actividad.findAll({
+        where: {
+          ExpositorId: ID,
+          Actividad_EventoId : req.body.Actividad_EventoId
         },
       });
       res.status(200).json(data);
@@ -80,15 +99,15 @@ export default {
     // capturando la imagen
     let ID = req.params.id;
     let datos = {ExpositorId : ID} // datos para actualizar
+    // let idActividad_Evento = res.
     if(req.file){
       datos.nombre_archivo = req.file.filename;
     }
-    console.log("esta llegando", datos);
-    console.log("id ", ID);
     try {
       await models.Material_De_Actividad.create({
         nombre_archivo : datos.nombre_archivo,
-        ExpositorId : ID
+        ExpositorId : ID,
+        Actividad_EventoId : req.body.Actividad_EventoId
       }, {
         // where : {
         //   ExpositorId : ID

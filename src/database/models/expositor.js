@@ -12,9 +12,13 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       // define association here
 
-      models.Expositor.hasMany(models.Material_De_Actividad, {
-        foreignKey: 'ExpositorId'
-      })
+      
+      // ******************************************************************
+      // para que funcniones expositor
+      // models.Expositor.hasMany(models.Material_De_Actividad, {
+      //   foreignKey: 'ExpositorId'
+      // })
+      // ******************************************************************
 
       models.Expositor.belongsTo(models.Usuario, {
         foreignKey : 'UsuarioId'

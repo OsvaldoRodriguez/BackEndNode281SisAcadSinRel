@@ -18,8 +18,12 @@ module.exports = {
       prioridad: {
         type: Sequelize.INTEGER
       },
+      // para corregir el expositor
       ExpositorId: {
         type: Sequelize.INTEGER
+      },
+      Actividad_EventoId : {
+        type : Sequelize.INTEGER
       },
       createdAt: {
         allowNull: false,
