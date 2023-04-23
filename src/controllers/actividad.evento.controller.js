@@ -42,6 +42,7 @@ export default {
       res.status(500).json({ mensaje: "Error al listar por iD" });
     }
   },
+  
   async actualizar(req, res) {
     let ID = req.params.id; // cuando es por parametros en params esta
     try {

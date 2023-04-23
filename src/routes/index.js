@@ -111,6 +111,10 @@ Route.post('/material_de_actividad', authMiddleware.auth, material_de_actividadC
 Route.get('/material_de_actividad/:id', authMiddleware.auth, material_de_actividadController.mostrarId);
 Route.put('/material_de_actividad/:id', authMiddleware.auth, material_de_actividadController.actualizar);
 Route.delete('/material_de_actividad/:id', authMiddleware.auth, material_de_actividadController.eliminar);
+var upload = multer({ storage: almacenar('./public/archivos/pdf/material_expositor') })
+Route.post('/material_de_actividad/:id/actualizar-imagen', upload.single("imagen"), material_de_actividadController.actualizarImagen);
+
+
 
 Route.get('/institucion', authMiddleware.auth, institucionController.mostrar);
 Route.post('/institucion', authMiddleware.auth, institucionController.guardar);

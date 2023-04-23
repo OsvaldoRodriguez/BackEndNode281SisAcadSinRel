@@ -29,6 +29,7 @@ export default {
   async mostrarId(req, res) {
     // cuando es por parametros -> el valor esta en params
     let ID = req.params.id;
+    // console.log("id del expositor", ID);
     console.log(ID);
     try {
       const data = await models.Actividad_Evento_Has_Expositor.findAll({
@@ -36,6 +37,8 @@ export default {
           ExpositorId: ID,
         },
       });
+
+      // console.log("datos recibidos", data);
       res.status(200).json(data);
     } catch (error) {
       

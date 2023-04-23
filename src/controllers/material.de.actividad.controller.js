@@ -10,7 +10,7 @@ export default {
         // }
         // primaryKey: 'i.Material_De_Actividad'
       });
-      res.status(200).json({ mensaje: "Todo Okey", body: data });
+      res.status(200).json(data);
     } catch (error) {
       console.log(error);
       res.status(500).json({ mensaje: "Error al listar" });
@@ -35,14 +35,15 @@ export default {
     try {
       const data = await models.Material_De_Actividad.findAll({
         where: {
-          id: ID,
+          ExpositorId: ID,
         },
       });
-      res.status(200).json({ mensaje: "Todo Okey", body: data });
+      res.status(200).json(data);
     } catch (error) {
       res.status(500).json({ mensaje: "Error al listar por iD" });
     }
   },
+  
 
   async actualizar(req, res) {
     let ID = req.params.id; // cuando es por parametros en params esta
@@ -73,5 +74,31 @@ export default {
     } catch (error) {
       res.status(500).json({ mensaje: "Error al eliminar" });
     }
+  },
+
+  async actualizarImagen(req, res) {
+    // capturando la imagen
+    let ID = req.params.id;
+    let datos = {ExpositorId : ID} // datos para actualizar
+    if(req.file){
+      datos.nombre_archivo = req.file.filename;
+    }
+    console.log("esta llegando", datos);
+    console.log("id ", ID);
+    try {
+      await models.Material_De_Actividad.create({
+        nombre_archivo : datos.nombre_archivo,
+        ExpositorId : ID
+      }, {
+        // where : {
+        //   ExpositorId : ID
+        // }
+      })
+      res.status(200).json({mensaje : "Foto actualizada"})
+    } catch (error) {
+      res.status(401).json(error);
+    }
+
+
   },
 };
