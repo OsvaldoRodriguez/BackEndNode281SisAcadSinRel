@@ -31,8 +31,8 @@ export default {
   async mostrarId(req, res) {
     // cuando es por parametros -> el valor esta en params
     let ID = req.params.id;
-    console.log(ID);
-    console.log("body", req)
+    // console.log(ID);
+    // console.log("body", req)
     try {
       const data = await models.Material_De_Actividad.findAll({
         where: {
@@ -48,8 +48,8 @@ export default {
   async mostrarIdByExpositor(req, res) {
     // cuando es por parametros -> el valor esta en params
     let ID = req.params.id;
-    console.log(ID);
-    console.log("body", req.body)
+    // console.log(ID);
+    // console.log("body", req.body)
     try {
       const data = await models.Material_De_Actividad.findAll({
         where: {
@@ -82,7 +82,9 @@ export default {
 
   async eliminar(req, res) {
     let ID = req.params.id; // cuando es .Material_De_Actividad/1 (con parametros) el parametro  esta en params
+    // console.log(ID);
     try {
+      // console.log("llegando a eliminar", req.body);
       const data = await models.Material_De_Actividad.destroy({
         where: {
           id: ID,

@@ -103,6 +103,8 @@ export default {
     if(req.file){
       datos.foto = req.file.filename;
     }
+    console.log("lo que esta lelgando ", datos);
+    console.log("id", ID);
     
     try {
       await models.Usuario.update(datos, {

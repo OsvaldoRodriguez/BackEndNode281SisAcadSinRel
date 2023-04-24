@@ -34,6 +34,7 @@ export const Route = Router();
 
 // para subir imagenes (esta en su mismo crud)
 function almacenar(direccion){
+  
   const storage = multer.diskStorage({
     destination: function (req, file, cb) {
       cb(null, direccion)

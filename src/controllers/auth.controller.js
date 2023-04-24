@@ -74,7 +74,6 @@ export default {
       text: `Usted acaba de iniciar sesión en SISTEMAS ACADEMICOS\n ${PIN} es su pin para poder loguearse de manera segura`,
     };
     // enviando correo
-
     // await emailer.enviarCorreo(datosCorreo);
 
     return res.status(200).json({
@@ -85,6 +84,7 @@ export default {
       rol: lista_roles,
       error: false,
     });
+    
   },
 
   async register(req, res) {
