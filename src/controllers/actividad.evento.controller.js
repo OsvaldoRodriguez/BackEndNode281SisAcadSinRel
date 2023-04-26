@@ -41,9 +41,9 @@ export default {
     try {
       const data = await models.Actividad_Evento.findAll({
         include: [
-          {
-            model: models.Categoria,
-          },
+          { model: models.Categoria },
+          { model: models.Ambiente },
+          { model: models.Expositor },
         ],
         where: {
           EventoId: ID,
@@ -56,16 +56,15 @@ export default {
   },
 
   async actualizar(req, res) {
-
     const nuevos_datos = {
-      nombre : req.body.nombre,
-      fecha : req.body.fecha,
-      horario_ini : req.body.horario_ini,
-      horario_fin : req.body.horario_fin,
-      CategoriaId : req.body.CategoriaId,
-      EventoId : req.body.EventoId
-    }
-    console.log( "llegando datos", req.body );
+      nombre: req.body.nombre,
+      fecha: req.body.fecha,
+      horario_ini: req.body.horario_ini,
+      horario_fin: req.body.horario_fin,
+      CategoriaId: req.body.CategoriaId,
+      EventoId: req.body.EventoId,
+    };
+    console.log("llegando datos", req.body);
     let ID = req.params.id; // cuando es por parametros en params esta
     try {
       const data = await models.Actividad_Evento.update(nuevos_datos, {
@@ -81,7 +80,7 @@ export default {
         },
         {
           where: {
-            Actividad_EventoId:  ID,
+            Actividad_EventoId: ID,
           },
         }
       );

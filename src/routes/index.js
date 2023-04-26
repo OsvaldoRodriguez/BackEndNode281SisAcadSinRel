@@ -68,15 +68,15 @@ var upload = multer({ storage: almacenar('./public/archivos/imagenes/infosistema
 Route.post('/infosistema/:id/actualizar-imagen', upload.single("imagen"), info_sistemaController.actualizarImagen);
 
 // creando los endpoints (rutas)
-Route.get('/persona', authMiddleware.auth, personaController.mostrar);
+Route.get('/persona', personaController.mostrar);
 Route.post('/persona', authMiddleware.auth, personaController.guardar);
-Route.get('/persona/:id', authMiddleware.auth, personaController.mostrarId);
+Route.get('/persona/:id', personaController.mostrarId);
 Route.put('/persona/:id', authMiddleware.auth, personaController.actualizar);
 Route.delete('/persona/:id', authMiddleware.auth, personaController.eliminar);
 
 
 // para usuario
-Route.get('/usuario', authMiddleware.auth, usuarioController.mostrar);
+Route.get('/usuario', usuarioController.mostrar);
 Route.get('/usuario-persona', authMiddleware.auth, usuarioController.mostrarConPersonaYBol);
 Route.post('/usuario', authMiddleware.auth, usuarioController.guardar);
 Route.get('/usuario/:id',  usuarioController.mostrarId);
@@ -87,7 +87,7 @@ Route.post('/usuario/:id/actualizar-imagen', upload.single("imagen"), usuarioCon
 
 
 //Rol
-Route.get('/rol', authMiddleware.auth, rolController.mostrar);
+Route.get('/rol', rolController.mostrar);
 Route.post('/rol', authMiddleware.auth, rolController.guardar);
 Route.get('/rol/:id',  rolController.mostrarId);
 Route.put('/rol/:id', authMiddleware.auth, rolController.actualizar);
@@ -102,7 +102,7 @@ Route.delete('/usuario_tiene_rol/:id', authMiddleware.auth, usuario_tiene_rolCon
 
 
 // Expositor
-Route.get('/expositor', authMiddleware.auth, expositorController.mostrar);
+Route.get('/expositor', expositorController.mostrar);
 Route.post('/expositor', authMiddleware.auth, expositorController.guardar);
 Route.get('/expositor/:id', authMiddleware.auth, expositorController.mostrarId);
 Route.put('/expositor/:id', authMiddleware.auth, expositorController.actualizar);
@@ -159,9 +159,9 @@ Route.get('/categoria/:id', authMiddleware.auth, categoriaController.mostrarId);
 Route.put('/categoria/:id', authMiddleware.auth, categoriaController.actualizar);
 Route.delete('/categoria/:id', authMiddleware.auth, categoriaController.eliminar);
 
-Route.get('/actividad_evento', authMiddleware.auth, actividad_eventoController.mostrar);
+Route.get('/actividad_evento', actividad_eventoController.mostrar);
 Route.post('/actividad_evento', authMiddleware.auth, actividad_eventoController.guardar);
-Route.get('/actividad_evento/:id', authMiddleware.auth, actividad_eventoController.mostrarId);
+Route.get('/actividad_evento/:id', actividad_eventoController.mostrarId);
 Route.put('/actividad_evento/:id', authMiddleware.auth, actividad_eventoController.actualizar);
 Route.delete('/actividad_evento/:id', authMiddleware.auth, actividad_eventoController.eliminar);
 
@@ -177,7 +177,7 @@ Route.get('/certificado/:id', authMiddleware.auth, certificadoController.mostrar
 Route.put('/certificado/:id', authMiddleware.auth, certificadoController.actualizar);
 Route.delete('/certificado/:id', authMiddleware.auth, certificadoController.eliminar);
 
-Route.get('/actividad_evento_has_expositor', authMiddleware.auth, actividad_evento_has_expositorController.mostrar);
+Route.get('/actividad_evento_has_expositor', actividad_evento_has_expositorController.mostrar);
 Route.post('/actividad_evento_has_expositor', authMiddleware.auth, actividad_evento_has_expositorController.guardar);
 Route.get('/actividad_evento_has_expositor/:id', authMiddleware.auth, actividad_evento_has_expositorController.mostrarId);
 Route.put('/actividad_evento_has_expositor/:id', authMiddleware.auth, actividad_evento_has_expositorController.actualizar);

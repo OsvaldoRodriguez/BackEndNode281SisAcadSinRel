@@ -31,10 +31,10 @@ module.exports = (sequelize, DataTypes) => {
       models.Actividad_Evento.belongsToMany(models.Ambiente, {
         through : models.Actividad_Evento_Solicita_Ambiente, foreignKey : 'Actividad_EventoId'
       }) 
-
       models.Actividad_Evento.belongsToMany(models.Expositor, {
         through : models.Actividad_Evento_Has_Expositor, foreignKey : 'Actividad_EventoId'
       }) 
+
 
       models.Actividad_Evento.belongsToMany(models.Usuario, {
         through : models.Usuario_Comenta_Actividad_Evento, foreignKey : 'Actividad_EventoId'
