@@ -8,7 +8,7 @@ export default {
           {
             model: models.Rol,
           },
-          {model : models.Persona}
+          { model: models.Persona },
         ],
       });
       res.status(200).json(data);
@@ -50,11 +50,16 @@ export default {
         where: {
           id: ID,
         },
-        include: {
-          model: models.Rol,
-        },
+        include: [
+          {
+            model: models.Rol,
+          },
+          {
+            model : models.Persona
+          }
+        ],
       });
-      res.status(200).json({ mensaje: "Todo Okey", body: data });
+      res.status(200).json(data);
     } catch (error) {
       res.status(500).json({ mensaje: "Error al listar por iD" });
     }
