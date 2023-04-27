@@ -104,7 +104,7 @@ export default {
     // let idActividad_Evento = res.
     if(req.file){
       datos.nombre_archivo = req.file.filename;
-    }
+    }Ac
     try {
       await models.Material_De_Actividad.create({
         nombre_archivo : datos.nombre_archivo,

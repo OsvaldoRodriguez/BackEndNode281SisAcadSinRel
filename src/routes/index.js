@@ -24,6 +24,7 @@ import usuario_comenta_eventoController from '../controllers/usuario.comenta.eve
 import usuario_comenta_actividad_eventoController from '../controllers/usuario.comenta.actividad.evento.controller'
 import usuario_asiste_actividad_eventoController from '../controllers/usuario.asiste.actividad.evento.controller'
 import sendEmailController from './../controllers/send.email.controller'
+import auditoriaController from './../controllers/auditoria.controller'
 import info_sistemaController from './../controllers/informacion_sistema.controller'
 import * as authMiddleware from '../middlewares/auth.middleware'
 import multer from 'multer'
@@ -48,6 +49,8 @@ function almacenar(direccion){
 }
   
 
+
+Route.get('/auditoria', authMiddleware.auth, auditoriaController.mostrar)
 
 // login
 // hay que proteger el pefil, logout
@@ -108,10 +111,10 @@ Route.get('/expositor/:id', authMiddleware.auth, expositorController.mostrarId);
 Route.put('/expositor/:id', authMiddleware.auth, expositorController.actualizar);
 Route.delete('/expositor/:id', authMiddleware.auth, expositorController.eliminar);
 
-Route.get('/material_de_actividad', authMiddleware.auth, material_de_actividadController.mostrar);
+Route.get('/material_de_actividad',  material_de_actividadController.mostrar);
 Route.put('/material_de_actividad_by_expositor/:id', authMiddleware.auth, material_de_actividadController.mostrarIdByExpositor);
-Route.post('/material_de_actividad', authMiddleware.auth, material_de_actividadController.guardar);
-Route.get('/material_de_actividad/:id', authMiddleware.auth, material_de_actividadController.mostrarId);
+Route.post('/material_de_actividad',  material_de_actividadController.guardar);
+Route.get('/material_de_actividad/:id',  material_de_actividadController.mostrarId);
 Route.put('/material_de_actividad/:id', authMiddleware.auth, material_de_actividadController.actualizar);
 Route.delete('/material_de_actividad/:id', authMiddleware.auth, material_de_actividadController.eliminar);
 var upload = multer({ storage: almacenar('./public/archivos/pdf/material_expositor') })
@@ -132,10 +135,10 @@ Route.put('/objetivo/:id', authMiddleware.auth, objetivoController.actualizar);
 Route.delete('/objetivo/:id', authMiddleware.auth, objetivoController.eliminar);
 
 Route.get('/evento', eventoController.mostrar);
-Route.post('/evento', authMiddleware.auth, eventoController.guardar);
-Route.get('/evento/:id', authMiddleware.auth, eventoController.mostrarId);
+Route.post('/evento', eventoController.guardar);
+Route.get('/evento/:id' , eventoController.mostrarId);
 Route.put('/evento/:id', authMiddleware.auth, eventoController.actualizar);
-Route.delete('/evento/:id', authMiddleware.auth, eventoController.eliminar);
+Route.post('/evento/:id', authMiddleware.auth, eventoController.eliminar);
 // solo eso para subir pasar la direecion
 var upload = multer({ storage: almacenar('./public/archivos/imagenes/eventos') })
 Route.post('/evento/:id/actualizar-imagen', upload.single("imagen"), eventoController.actualizarImagen);
@@ -190,7 +193,7 @@ Route.put('/actividad_evento_solicita_ambiente/:id', authMiddleware.auth, activi
 Route.delete('/actividad_evento_solicita_ambiente/:id', authMiddleware.auth, actividad_evento_solicita_ambienteController.eliminar);
 
 Route.get('/usuario_se_inscribe_evento', authMiddleware.auth, usuario_se_inscribe_eventoController.mostrar);
-Route.post('/usuario_se_inscribe_evento', authMiddleware.auth, usuario_se_inscribe_eventoController.guardar);
+Route.post('/usuario_se_inscribe_evento',  usuario_se_inscribe_eventoController.guardar);
 Route.get('/usuario_se_inscribe_evento/:id', authMiddleware.auth, usuario_se_inscribe_eventoController.mostrarId);
 Route.put('/usuario_se_inscribe_evento/:id', authMiddleware.auth, usuario_se_inscribe_eventoController.actualizar);
 Route.delete('/usuario_se_inscribe_evento/:id', authMiddleware.auth, usuario_se_inscribe_eventoController.eliminar);
@@ -202,16 +205,18 @@ Route.put('/usuario_califica_evento/:id', authMiddleware.auth, usuario_califica_
 Route.delete('/usuario_califica_evento/:id', authMiddleware.auth, usuario_califica_eventoController.eliminar);
 
 Route.get('/usuario_reserva_participacion_evento', authMiddleware.auth, usuario_reserva_participacion_eventoController.mostrar);
-Route.post('/usuario_reserva_participacion_evento', authMiddleware.auth, usuario_reserva_participacion_eventoController.guardar);
+Route.post('/usuario_reserva_participacion_evento', usuario_reserva_participacion_eventoController.guardar);
 Route.get('/usuario_reserva_participacion_evento/:id', authMiddleware.auth, usuario_reserva_participacion_eventoController.mostrarId);
 Route.put('/usuario_reserva_participacion_evento/:id', authMiddleware.auth, usuario_reserva_participacion_eventoController.actualizar);
 Route.delete('/usuario_reserva_participacion_evento/:id', authMiddleware.auth, usuario_reserva_participacion_eventoController.eliminar);
 
-Route.get('/usuario_comenta_evento', authMiddleware.auth, usuario_comenta_eventoController.mostrar);
-Route.post('/usuario_comenta_evento', authMiddleware.auth, usuario_comenta_eventoController.guardar);
-Route.get('/usuario_comenta_evento/:id', authMiddleware.auth, usuario_comenta_eventoController.mostrarId);
+Route.get('/usuario_comenta_evento', usuario_comenta_eventoController.mostrar);
+Route.post('/usuario_comenta_evento', usuario_comenta_eventoController.guardar);
+Route.get('/usuario_comenta_evento/:id', usuario_comenta_eventoController.mostrarId);
 Route.put('/usuario_comenta_evento/:id', authMiddleware.auth, usuario_comenta_eventoController.actualizar);
 Route.delete('/usuario_comenta_evento/:id', authMiddleware.auth, usuario_comenta_eventoController.eliminar);
+
+
 
 Route.get('/usuario_comenta_actividad_evento', authMiddleware.auth, usuario_comenta_actividad_eventoController.mostrar);
 Route.post('/usuario_comenta_actividad_evento', authMiddleware.auth, usuario_comenta_actividad_eventoController.guardar);
